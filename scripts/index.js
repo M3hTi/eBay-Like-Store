@@ -82,7 +82,12 @@ function showProducts(arr) {
 
             const product = new Product(image, title , price , quantity , id)
 
-            console.log(product);
+            // console.log(product);
+
+            cart.addProduct(product)
+
+
+            console.log(cart.products);
         })
         
         productsGrid.appendChild(card)
