@@ -1,10 +1,8 @@
 const productsGrid = document.querySelector('.products-grid')
-
 const searcInput = document.querySelector('.js-srchInput')
-
 const searchBtn = document.querySelector('.js-srchBtn')
-
 const cartCounter = document.querySelector('.cart-count')
+const cartIcon = document.querySelector('.cart-icon')
 
 fetch(`https://api.escuelajs.co/api/v1/products`)
 .then(response => {
@@ -19,6 +17,9 @@ fetch(`https://api.escuelajs.co/api/v1/products`)
     })
     searchBtn.addEventListener('click', (e) => {
         searchProduct(e, data)
+    })
+    cartIcon.addEventListener('click', () => {
+        displayCartItems(cart.products);
     })
 })
 .catch(error => {
@@ -97,7 +98,88 @@ function showProducts(arr) {
     });
 }
 
+function displayCartItems(arr) {
+    // Remove existing cart overlay if present
+    const existingOverlay = document.querySelector('.cart-overlay');
+    if (existingOverlay) {
+        existingOverlay.remove();
+    }
 
+    // Create cart overlay
+    const cartOverlay = document.createElement('div');
+    cartOverlay.className = 'cart-overlay';
+
+    // Create cart items container
+    const cartItemsContainer = document.createElement('div');
+    cartItemsContainer.className = 'cart-items-container';
+
+    
+
+    // Add each cart item
+    arr.forEach(element => {
+        const cartItem = document.createElement('div');
+        cartItem.className = 'cart-item';
+
+        const itemImage = document.createElement('img');
+        itemImage.src = element.image;
+        itemImage.className = 'cart-item-image';
+        itemImage.setAttribute("onerror", "this.src='https://via.placeholder.com/300'");
+
+        const itemInfo = document.createElement('div');
+        itemInfo.className = 'cart-item-info';
+
+        const itemTitle = document.createElement('h3');
+        itemTitle.className = 'cart-item-title';
+        itemTitle.textContent = element.title;
+
+        const itemPrice = document.createElement('p');
+        itemPrice.className = 'cart-item-price';
+        const price = element.price / 100; // Convert cents to dollars
+        itemPrice.textContent = `Price: $${price.toFixed(2)}`;
+
+        const itemQuantity = document.createElement('p');
+        itemQuantity.className = 'cart-item-price'
+        itemQuantity.textContent = `Quantity: ${element.quantity}`
+
+        
+
+        itemInfo.appendChild(itemTitle);
+        itemInfo.appendChild(itemPrice);
+        itemInfo.appendChild(itemQuantity);
+
+        cartItem.appendChild(itemImage);
+        cartItem.appendChild(itemInfo);
+        cartItemsContainer.appendChild(cartItem);
+    });
+
+    // Add total
+    const totalElement = document.createElement('div');
+    totalElement.className = 'cart-total';
+    const total = cart.calculateTotalPrice()
+    totalElement.textContent = `Total: $${total.toFixed(2)}`;
+
+    // Append everything to cart overlay
+    cartOverlay.appendChild(cartItemsContainer);
+    cartOverlay.appendChild(totalElement);
+
+    // Add to document
+    document.body.appendChild(cartOverlay);
+
+    // Show cart overlay
+    setTimeout(() => {
+        cartOverlay.classList.add('active');
+    }, 10);
+
+    // Close cart when clicking outside
+    document.addEventListener('click', (e) => {
+        if (!cartOverlay.contains(e.target) && !cartIcon.contains(e.target)) {
+            cartOverlay.classList.remove('active');
+            setTimeout(() => {
+                cartOverlay.remove();
+            }, 300);
+        }
+    });
+}
 
 function searchProduct(e, arr) {
     if(e.type === 'click' || (e.type === 'keydown' &&  e.key === 'Enter')){
