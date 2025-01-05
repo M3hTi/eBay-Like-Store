@@ -287,3 +287,62 @@ footer {
         max-width: 100%;
     }
 }
+
+/* Add these styles at the end of your CSS file */
+
+.cart-overlay {
+    position: fixed;
+    top: 0;
+    right: -400px; /* Start off-screen */
+    width: 400px;
+    height: 100vh;
+    background: white;
+    box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    transition: right 0.3s ease;
+    z-index: 1000;
+    overflow-y: auto;
+}
+
+.cart-overlay.active {
+    right: 0;
+}
+
+.cart-item {
+    display: flex;
+    padding: 15px;
+    border: 1px solid #eee;
+    border-radius: 8px;
+    margin-bottom: 15px;
+}
+
+.cart-item-image {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 4px;
+}
+
+.cart-item-info {
+    flex: 1;
+    padding-left: 15px;
+}
+
+.cart-item-title {
+    font-size: 1rem;
+    margin-bottom: 5px;
+}
+
+.cart-item-price {
+    color: #ff4400;
+    font-weight: bold;
+}
+
+.cart-total {
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 2px solid #eee;
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #ff4400;
+}
