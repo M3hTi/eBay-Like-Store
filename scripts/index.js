@@ -1,5 +1,9 @@
 const productsGrid = document.querySelector('.products-grid')
 
+const searcInput = document.querySelector('.js-srchInput')
+
+const searchBtn = document.querySelector('.js-srchBtn')
+
 fetch(`https://api.escuelajs.co/api/v1/products`)
 .then(response => {
     if(!response.ok) throw new Error(`Error : ${response.statusText}`);
@@ -8,6 +12,12 @@ fetch(`https://api.escuelajs.co/api/v1/products`)
 .then(data => {
     console.log(data);
     showProducts(data)
+    searcInput.addEventListener('keydown', (e) => {
+        searchProduct(e, data)
+    })
+    searchBtn.addEventListener('click', (e) => {
+        searchProduct(e, data)
+    })
 })
 .catch(error => {
     console.log(error);
@@ -66,3 +76,21 @@ function showProducts(arr) {
         productsGrid.appendChild(card)
     });
 }
+
+
+
+function searchProduct(e, arr) {
+    if(e.type === 'click' || (e.type === 'keydown' &&  e.key === 'Enter')){
+        const srchValue = searcInput.value.toLowerCase();
+
+        const matchProduct = arr.filter(elem => 
+            elem.title.toLowerCase().includes(srchValue)
+        );
+
+        showProducts(matchProduct);
+    }
+}
+
+
+
+
