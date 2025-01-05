@@ -1,3 +1,14 @@
+const cart = {
+    products : [],
+    addProduct : function (obj) {
+        this.products.push(obj)
+    }
+}
+
+
+
+
+
 class Product {
     constructor(image, title , price , quantity , id) {
         this.image = image
