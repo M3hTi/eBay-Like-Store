@@ -4,6 +4,8 @@ const searcInput = document.querySelector('.js-srchInput')
 
 const searchBtn = document.querySelector('.js-srchBtn')
 
+const cartCounter = document.querySelector('.cart-count')
+
 fetch(`https://api.escuelajs.co/api/v1/products`)
 .then(response => {
     if(!response.ok) throw new Error(`Error : ${response.statusText}`);
@@ -86,6 +88,7 @@ function showProducts(arr) {
 
             cart.addProduct(product)
 
+            cartCounter.textContent = cart.products.length
 
             console.log(cart.products);
         })
