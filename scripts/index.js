@@ -51,13 +51,13 @@ function showProducts(arr) {
         })}`
         
         // Add quantity selector
-        const quantity = document.createElement('select')
-        quantity.className = 'quantity'
+        const quantitySelect = document.createElement('select') // renamed from quantity to quantitySelect
+        quantitySelect.className = 'quantity'
         for(let i = 1; i <= 5; i++) {
             const option = document.createElement('option')
             option.value = i
             option.textContent = i
-            quantity.appendChild(option)
+            quantitySelect.appendChild(option)
         }
         
         // Add buy button
@@ -69,9 +69,21 @@ function showProducts(arr) {
         card.appendChild(cardImg)
         productDetail.appendChild(title)
         productDetail.appendChild(price)
-        productDetail.appendChild(quantity)
+        productDetail.appendChild(quantitySelect)
         productDetail.appendChild(buyBtn)
         card.appendChild(productDetail)
+
+        buyBtn.addEventListener('click', () => {
+            const image = element.images[0]
+            const title = element.title
+            const price =  (element.price) * 100
+            const quantity = quantitySelect.value // Now referencing the correct select element
+            const id = element.id
+
+            const product = new Product(image, title , price , quantity , id)
+
+            console.log(product);
+        })
         
         productsGrid.appendChild(card)
     });
