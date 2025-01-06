@@ -197,7 +197,7 @@ function displayCartItems(arr) {
 
     const checkOutLink = document.createElement('a')
     checkOutLink.className = "checkOut"
-    checkOutLink.href = "#"
+    checkOutLink.href = "/pages/checkOut.html"
     checkOutLink.textContent = "Proceed to checkout"
     checkOut.appendChild(checkOutLink)
      
