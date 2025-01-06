@@ -359,3 +359,101 @@ footer {
 .checkOut:hover{
     background-color: #e63d00;
 }
+
+.cart-overlay {
+    position: fixed;
+    top: 0;
+    right: -400px;
+    width: 400px;
+    height: 100vh;
+    background: white;
+    box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
+    transition: right 0.3s ease;
+    z-index: 1000;
+    padding: 20px;
+}
+
+.cart-overlay.active {
+    right: 0;
+}
+
+.cart-item {
+    display: flex;
+    align-items: center;
+    padding: 15px;
+    border-bottom: 1px solid #eee;
+    position: relative;
+}
+
+.cart-item-image {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.cart-item-info {
+    margin-left: 15px;
+    flex: 1;
+}
+
+.cart-item-title {
+    font-size: 1rem;
+    margin-bottom: 5px;
+}
+
+.cart-item-price {
+    color: #666;
+    font-size: 0.9rem;
+}
+
+.delete-btn {
+    background: none;
+    border: none;
+    color: #ff4400;
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+    margin-left: 10px;
+}
+
+.delete-btn:hover {
+    background: #fff1ee;
+    transform: scale(1.1);
+}
+
+.delete-btn i {
+    font-size: 1.2rem;
+}
+
+.cart-total {
+    margin-top: 20px;
+    padding: 15px;
+    border-top: 2px solid #eee;
+    font-weight: bold;
+    font-size: 1.1rem;
+}
+
+.checkOut {
+    display: block;
+    text-align: center;
+    background: #ff4400;
+    color: white;
+    text-decoration: none;
+    padding: 12px;
+    border-radius: 8px;
+    margin-top: 15px;
+    transition: background-color 0.3s;
+}
+
+.checkOut:hover {
+    background: #e63d00;
+}
+
+@media (max-width: 480px) {
+    .cart-overlay {
+        width: 100%;
+        right: -100%;
+    }
+}
