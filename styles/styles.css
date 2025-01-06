@@ -346,3 +346,16 @@ footer {
     font-weight: bold;
     color: #ff4400;
 }
+.checkOut{
+    background-color: #ff4400;
+    color:  white;
+    display: block;
+    width: 100%;
+    border-radius: 15px;
+    padding: 4px 40px;
+    text-decoration: none;
+    margin-top: 20px;
+}
+.checkOut:hover{
+    background-color: #e63d00;
+}
