@@ -520,10 +520,12 @@ footer {
 .checkout-page .quantity-container {
     display: flex;
     align-items: center;
-    gap: 15px;
+    gap: 12px;
+    padding: 8px 0;
 }
 
-.checkout-page .edit-quantity-btn {
+.checkout-page .edit-quantity-btn,
+.checkout-page .save-quantity-btn {
     background-color: #ff4400;
     color: white;
     border: none;
@@ -534,9 +536,46 @@ footer {
     transition: all 0.3s ease;
 }
 
-.checkout-page .edit-quantity-btn:hover {
+.checkout-page .edit-quantity-btn:hover,
+.checkout-page .save-quantity-btn:hover {
     background-color: #e63d00;
     transform: translateY(-1px);
+}
+
+.checkout-page .quantity-container input[type="number"] {
+    width: 80px;
+    padding: 8px 12px;
+    border: 2px solid #eee;
+    border-radius: 8px;
+    font-size: 1rem;
+    color: #333;
+    background-color: white;
+    transition: all 0.3s ease;
+    outline: none;
+    text-align: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.checkout-page .quantity-container input[type="number"]:hover {
+    border-color: #ff4400;
+    box-shadow: 0 2px 8px rgba(255, 68, 0, 0.1);
+}
+
+.checkout-page .quantity-container input[type="number"]:focus {
+    border-color: #ff4400;
+    box-shadow: 0 0 0 3px rgba(255, 68, 0, 0.1);
+}
+
+/* Remove spinner buttons */
+.checkout-page .quantity-container input[type="number"]::-webkit-outer-spin-button,
+.checkout-page .quantity-container input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* For Firefox */
+.checkout-page .quantity-container input[type="number"] {
+    -moz-appearance: textfield;
 }
 
 @media (max-width: 768px) {
