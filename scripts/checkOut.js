@@ -98,6 +98,25 @@ function showCartItems(arr) {
             
             // Auto focus the input
             numberInput.focus()
+
+            saveBtn.addEventListener('click', () => {
+                const inputValue = numberInput.value
+                element.quantity = inputValue
+                numberInput.remove()
+                saveBtn.remove()
+                quantityContainer.appendChild(editBtn)
+                quantity.textContent = `Quantity: ${element.quantity}`
+                
+                // Update localStorage with new quantity
+                localStorage.setItem('cartItems', JSON.stringify(cart.products))
+                
+                // Update total display
+                const total = cart.calculateTotalPrice()
+                const totalText = document.querySelector('.total-text')
+                if (totalText) {
+                    totalText.textContent = `Total: $${total.toFixed(2)}`
+                }
+            })
         })
         
         // Add price
