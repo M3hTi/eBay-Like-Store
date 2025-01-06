@@ -1,14 +1,21 @@
+const container = document.querySelector('.products-grid')
+const cartIcon = document.querySelector('.cart-count')
+
 function getCartItems() {
     const cartItems = JSON.parse(localStorage.getItem('cartItems'))
-    const container = document.querySelector('.products-grid')
-    container.innerHTML = ''
     
     if (!cartItems || cartItems.length === 0) {
         container.innerHTML = '<div class="empty-cart">Your cart is empty</div>'
+        cartIcon.textContent = '0'
         return
     }
+
+    // Initialize cart products from localStorage
+    cart.products = cartItems
+    cartIcon.textContent = cartItems.length
+    container.innerHTML = ''
     
-    showCartItems(cartItems, container)
+    showCartItems(cartItems)
     addTotalAndCheckout(container)
 }
 
@@ -19,7 +26,8 @@ function addTotalAndCheckout(container) {
     
     const totalText = document.createElement('div')
     totalText.className = 'total-text'
-    totalText.textContent = 'Total: your_total'
+    const total = cart.calculateTotalPrice()
+    totalText.textContent = `Total: $${total.toFixed(2)}`
     
     totalContainer.appendChild(totalText)
     container.appendChild(totalContainer)
@@ -37,7 +45,7 @@ function addTotalAndCheckout(container) {
     container.appendChild(buttonContainer)
 }
 
-function showCartItems(arr, container) {
+function showCartItems(arr) {
     arr.forEach(element => {
         const cartItem = document.createElement('div')
         cartItem.className = 'product-card'
