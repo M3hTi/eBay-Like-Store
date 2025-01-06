@@ -79,6 +79,26 @@ function showCartItems(arr) {
         
         quantityContainer.appendChild(quantity)
         quantityContainer.appendChild(editBtn)
+
+        editBtn.addEventListener('click', () => {
+            editBtn.remove()
+            const numberInput = document.createElement('input')
+            numberInput.type = 'number'
+            numberInput.min = '1'
+            numberInput.max = '99'
+            numberInput.value = element.quantity
+            numberInput.placeholder = 'Qty'
+            
+            const saveBtn = document.createElement('button')
+            saveBtn.className = 'edit-quantity-btn'
+            saveBtn.textContent = 'Save'
+            
+            quantityContainer.appendChild(numberInput)
+            quantityContainer.appendChild(saveBtn)
+            
+            // Auto focus the input
+            numberInput.focus()
+        })
         
         // Add price
         const price = document.createElement('p')
