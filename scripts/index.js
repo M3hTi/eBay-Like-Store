@@ -103,20 +103,34 @@ function showProducts(arr) {
 
 function displayCartItems(arr) {
     // Remove existing cart overlay if present
-    const existingOverlay = document.querySelector('.cart-overlay');
-    if (existingOverlay) {
-        existingOverlay.remove();
+    let cartOverlay = document.querySelector('.cart-overlay');
+    let cartItemsContainer;
+    
+    if (!cartOverlay) {
+        // Create new overlay only if it doesn't exist
+        cartOverlay = document.createElement('div');
+        cartOverlay.className = 'cart-overlay';
+        
+        // Add to document
+        document.body.appendChild(cartOverlay);
+        
+        // Add click outside listener only once
+        document.addEventListener('click', (e) => {
+            if (!cartOverlay.contains(e.target) && !cartIcon.contains(e.target)) {
+                cartOverlay.classList.remove('active');
+                setTimeout(() => {
+                    cartOverlay.remove();
+                }, 300);
+            }
+        });
     }
 
-    // Create cart overlay
-    const cartOverlay = document.createElement('div');
-    cartOverlay.className = 'cart-overlay';
-
-    // Create cart items container
-    const cartItemsContainer = document.createElement('div');
-    cartItemsContainer.className = 'cart-items-container';
-
+    // Clear existing content
+    cartOverlay.innerHTML = '';
     
+    // Create cart items container
+    cartItemsContainer = document.createElement('div');
+    cartItemsContainer.className = 'cart-items-container';
 
     // Add each cart item
     arr.forEach(element => {
@@ -150,19 +164,16 @@ function displayCartItems(arr) {
 
 
         deleteBtn.addEventListener('click', () => {
-            // console.log(element);
-            const foundProduct = cart.products.some(product => product.id === element.id)
-
-            if(foundProduct){
-                const findIndex = cart.products.findIndex(product => product.id === element.id)
-
-                cart.products.splice(findIndex, 1)
-
-                displayCartItems(cart.products)
+            const findIndex = cart.products.findIndex(product => product.id === element.id);
+            if (findIndex !== -1) {
+                cart.products.splice(findIndex, 1);
+                cartCounter.textContent = cart.products.length; // Update counter
+                localStorage.setItem('cartItems', JSON.stringify(cart.products)); // Update localStorage
+                
+                // Just update the container content
+                displayCartItems(cart.products);
             }
-
-            // console.log(cart.products);
-        })
+        });
 
         itemInfo.appendChild(itemTitle);
         itemInfo.appendChild(itemPrice);
@@ -197,23 +208,12 @@ function displayCartItems(arr) {
     cartOverlay.appendChild(totalElement);
     cartOverlay.appendChild(checkOut)
 
-    // Add to document
-    document.body.appendChild(cartOverlay);
-
-    // Show cart overlay
-    setTimeout(() => {
-        cartOverlay.classList.add('active');
-    }, 10);
-
-    // Close cart when clicking outside
-    document.addEventListener('click', (e) => {
-        if (!cartOverlay.contains(e.target) && !cartIcon.contains(e.target)) {
-            cartOverlay.classList.remove('active');
-            setTimeout(() => {
-                cartOverlay.remove();
-            }, 300);
-        }
-    });
+    // Show cart overlay if not already visible
+    if (!cartOverlay.classList.contains('active')) {
+        setTimeout(() => {
+            cartOverlay.classList.add('active');
+        }, 10);
+    }
 }
 
 function searchProduct(e, arr) {
