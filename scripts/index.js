@@ -158,9 +158,22 @@ function displayCartItems(arr) {
     const total = cart.calculateTotalPrice()
     totalElement.textContent = `Total: $${total.toFixed(2)}`;
 
+
+    const checkOut = document.createElement('div')
+
+
+    const checkOutLink = document.createElement('a')
+    checkOutLink.className = "checkOut"
+    checkOutLink.href = "#"
+    checkOutLink.textContent = "Proceed to checkout"
+    checkOut.appendChild(checkOutLink)
+     
+
+
     // Append everything to cart overlay
     cartOverlay.appendChild(cartItemsContainer);
     cartOverlay.appendChild(totalElement);
+    cartOverlay.appendChild(checkOut)
 
     // Add to document
     document.body.appendChild(cartOverlay);
