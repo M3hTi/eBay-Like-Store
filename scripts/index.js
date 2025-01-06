@@ -91,6 +91,9 @@ function showProducts(arr) {
 
             cartCounter.textContent = cart.products.length
 
+
+            localStorage.setItem('cartItems', JSON.stringify(cart.products))
+
             console.log(cart.products);
         })
         
@@ -141,7 +144,25 @@ function displayCartItems(arr) {
         itemQuantity.className = 'cart-item-price'
         itemQuantity.textContent = `Quantity: ${element.quantity}`
 
-        
+        const deleteBtn = document.createElement('button');
+        deleteBtn.className = 'delete-btn';
+        deleteBtn.innerHTML = '<i class="fas fa-trash"></i>';
+
+
+        deleteBtn.addEventListener('click', () => {
+            // console.log(element);
+            const foundProduct = cart.products.some(product => product.id === element.id)
+
+            if(foundProduct){
+                const findIndex = cart.products.findIndex(product => product.id === element.id)
+
+                cart.products.splice(findIndex, 1)
+
+                displayCartItems(cart.products)
+            }
+
+            // console.log(cart.products);
+        })
 
         itemInfo.appendChild(itemTitle);
         itemInfo.appendChild(itemPrice);
@@ -149,6 +170,7 @@ function displayCartItems(arr) {
 
         cartItem.appendChild(itemImage);
         cartItem.appendChild(itemInfo);
+        cartItem.appendChild(deleteBtn);
         cartItemsContainer.appendChild(cartItem);
     });
 
