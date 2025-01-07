@@ -28,6 +28,13 @@ fetch(`https://api.escuelajs.co/api/v1/products`)
 
 function showProducts(arr) {
     productsGrid.innerHTML = ''; // Clear existing content first
+
+    const myItems = JSON.parse(localStorage.getItem('cartItems') || '[]')
+
+    cart.products  = myItems
+
+
+    cartCounter.textContent = cart.products.length
     
     arr.forEach(element => {
         const card = document.createElement('div')
