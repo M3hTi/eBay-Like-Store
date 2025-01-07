@@ -1,8 +1,10 @@
 const container = document.querySelector('.products-grid')
 const cartIcon = document.querySelector('.cart-count')
+const srchInput = document.querySelector('.js-srchInput')
+const srchBtn = document.querySelector('.js-srchBtn')
 
-function getCartItems() {
-    const cartItems = JSON.parse(localStorage.getItem('cartItems'))
+function initializeCheckoutPage() {  // Renamed from getCartItems to initializeCheckoutPage
+    const cartItems = getCartItems()  // This calls the utility function that gets items from localStorage
     
     if (!cartItems || cartItems.length === 0) {
         container.innerHTML = '<div class="empty-cart">Your cart is empty</div>'
@@ -17,6 +19,8 @@ function getCartItems() {
     
     showCartItems(cartItems)
     addTotalAndCheckout(container)
+    srchInput.addEventListener('keydown', searchItemsFromCart)
+    srchBtn.addEventListener('click', searchItemsFromCart)
 }
 
 function addTotalAndCheckout(container) {
@@ -136,4 +140,24 @@ function showCartItems(arr) {
     });
 }
 
-window.addEventListener('load', getCartItems)
+function getCartItems(){
+    const items = JSON.parse(localStorage.getItem('cartItems'))
+    return items
+}
+
+
+function searchItemsFromCart(e){
+    if(e.type === 'click' || (e.type === 'keydown' && e.key === "Enter")){
+        const myItems = getCartItems()
+        const srchValue = srchInput.value.toLowerCase()
+        const matchProducts = myItems.filter(product => product.title.toLowerCase().includes(srchValue))
+
+        container.innerHTML = ''
+        showCartItems(matchProducts)
+        
+        // Always add total and checkout based on full cart, not filtered results
+        addTotalAndCheckout(container)
+    }
+}
+
+window.addEventListener('load', initializeCheckoutPage)  // Updated event listener to use new name
